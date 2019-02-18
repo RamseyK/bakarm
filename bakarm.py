@@ -51,7 +51,6 @@ def main():
 
     # Transform bad instructions to a DCD
     md.skipdata = True
-    md.skipdata_mnem = "dcd"
 
     # Dictionary of label sources keyed by source address
     source_labels = {}
