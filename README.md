@@ -5,7 +5,6 @@ Disassembles a stream of bytes from a file as ARM / ARM64 instructions using [Ca
 
 ## Usage:
 
-
 ```bash
 usage: bakarm.py [-h] [-a ARCH] [-b BASE] [-o OFFSET] file
 
@@ -22,9 +21,10 @@ optional arguments:
 
 ```
 
-## Requirements:
+I copy bakarm.py to /usr/local/bin/ for quick access and to grep output.
 
-### Python
+
+## Requirements:
 
 * Python 3.5+
 
