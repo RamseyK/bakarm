@@ -27,6 +27,7 @@ I copy bakarm.py to /usr/local/bin/ for quick access and to grep output.
 ## Requirements:
 
 * Python 3.5+
+* Capstone
 
 ## License:
 BSD
