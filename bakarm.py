@@ -30,10 +30,10 @@ def main():
 
     base_address = args.base
 
-    # parse arch/mode
+    # parse arch
     if args.arch and args.arch == 'arm64':
         arch = CS_ARCH_ARM64
-        mode = CS_MODE_64
+        mode = CS_MODE_ARM
     else:
         arch = CS_ARCH_ARM
         mode = CS_MODE_ARM
@@ -49,7 +49,7 @@ def main():
     md = Cs(arch, mode)
     md.detail = True  # Needed for semantic group info
 
-    # Transform bad instructions to a DCD
+    # Skip bad instructions (will be transformed to a .byte <instr bytes>)
     md.skipdata = True
 
     # Dictionary of label sources keyed by source address
