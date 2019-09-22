@@ -3,6 +3,7 @@
 import os
 import sys
 import argparse
+import signal
 from capstone import *
 
 
@@ -18,7 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description='Disassemble a stream of bytes in a file as ARM/ARM64 instructions')
     parser.add_argument('-a', '--arch', required=False, type=str, default='arm', help='Architecture to disassemble as: [arm, arm64]')
     parser.add_argument('-b', '--base', required=False, type=int, default=0, help='Virtual base address to use')
-    parser.add_argument('-o', '--offset', required=False, type=int, default=0, help='Offset in the file to start at')
+    parser.add_argument('-o', '--offset', required=False, type=str, default="0", help='Offset in the file to start at')
     parser.add_argument('file')
 
     args = parser.parse_args()
@@ -38,10 +39,21 @@ def main():
         arch = CS_ARCH_ARM
         mode = CS_MODE_ARM
 
+    # convert offset to integer
+    offset = 0
+    if args.offset.startswith("0x"):
+        offset = int(args.offset, 16)
+    else:
+        offset = int(args.offset)
+
+    # Exit the program if the output is being piped somewhere, and that pipe has been closed
+    # Usecase: bakarm.py test.bin | less
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+
     with open(args.file, 'rb') as fh:
         # Skip offset number of bytes if specified
-        if args.offset > 0:
-            fh.seek(args.offset)
+        if offset > 0:
+            fh.seek(offset)
 
         code = fh.read()
 
