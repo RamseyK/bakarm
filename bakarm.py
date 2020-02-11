@@ -18,8 +18,9 @@ def main():
 
     parser = argparse.ArgumentParser(description='Disassemble a stream of bytes in a file as ARM/ARM64 instructions')
     parser.add_argument('-a', '--arch', required=False, type=str, default='arm', help='Architecture to disassemble as: [arm, arm64]')
-    parser.add_argument('-b', '--base', required=False, type=int, default=0, help='Virtual base address to use')
+    parser.add_argument('-b', '--base', required=False, type=str, default="0", help='Virtual base address to use')
     parser.add_argument('-o', '--offset', required=False, type=str, default="0", help='Offset in the file to start at')
+    parser.add_argument('-thumb', '--thumb', required=False, action='store_true', help="Treat all ARM32 bit code as THUMB")
     parser.add_argument('file')
 
     args = parser.parse_args()
@@ -29,15 +30,24 @@ def main():
         parser.print_help()
         return -1
 
-    base_address = args.base
-
     # parse arch
     if args.arch and args.arch == 'arm64':
         arch = CS_ARCH_ARM64
         mode = CS_MODE_ARM
     else:
         arch = CS_ARCH_ARM
-        mode = CS_MODE_ARM
+
+        if args.thumb:
+            mode = CS_MODE_THUMB
+        else:
+            mode = CS_MODE_ARM
+
+    # convert base to integer
+    base = 0
+    if args.base.startswith("0x"):
+        base_address = int(args.base, 16)
+    else:
+        base_address = int(args.base)
 
     # convert offset to integer
     offset = 0
