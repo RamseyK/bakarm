@@ -1,7 +1,7 @@
 # bakarm - Script to disassemble bytes as ARM / ARM64, based on Capstone
 https://github.com/RamseyK/bakarm
 
-Disassembles a stream of bytes from a file as ARM / ARM64 instructions using [Capstone](http://www.capstone-engine.org/).  Supports basic label resolution.  I wrote this because I got tired of taking a sledgehammer (IDA / Hopper) to arbitrary bytes when I just wanted to know if it was valid ARM code.  Inspired by Jonathan Levin's [disarm](http://newosxbook.com/tools/disarm.html).
+Disassembles a stream of bytes from a file as ARM / ARM64 instructions using [Capstone](http://www.capstone-engine.org/).  Supports basic label resolution.  I wrote this because I got tired of taking a sledgehammer (IDA / Hopper) to arbitrary file bytes I just wanted to treat as ARM code.  Inspired by Jonathan Levin's [disarm](http://newosxbook.com/tools/disarm.html).
 
 ## Usage:
 
@@ -30,4 +30,4 @@ I copy bakarm.py to /usr/local/bin/ for quick access and to grep output.
 * Capstone
 
 ## License:
-BSD
+BSD. See LICENSE.TXT.
